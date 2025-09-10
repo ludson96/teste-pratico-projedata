@@ -9,6 +9,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 import main.java.com.projedata.model.Funcionario;
+
 /**
  * Main class for the Projedata application.
  * This class contains the main method, which performs operations for handling
@@ -45,7 +46,10 @@ public class ProjedataApplication {
     //• informação de data deve ser exibido no formato dd/mm/aaaa;
     //• informação de valor numérico deve ser exibida no formatado com separador de milhar como ponto e decimal como vírgula
     System.out.println("Lista de Funcionários:");
-    funcionarios.forEach(System.out::println);
+    funcionarios.forEach(f -> System.out.println("Nome: " + f.getNome() +
+        ", Data Nascimento: " + f.getDataNascimento().format(formatterData) +
+        ", Função: " + f.getFuncao() +
+        ", Salário: R$ " + formatterSalario.format(f.getSalario())));
 
     // 3.4 – Os funcionários receberam 10% de aumento de salário, atualizar a lista de funcionários com novo valor.
     funcionarios.forEach(f -> f.setSalario(f.getSalario().multiply(new BigDecimal("1.1"))));
