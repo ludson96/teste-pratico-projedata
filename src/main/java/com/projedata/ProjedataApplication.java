@@ -6,8 +6,12 @@ import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 import java.util.stream.Collectors;
+import main.java.com.projedata.factory.FuncionarioFactory;
 import main.java.com.projedata.model.Funcionario;
 
 /**
@@ -17,6 +21,16 @@ import main.java.com.projedata.model.Funcionario;
  */
 public class ProjedataApplication {
   /**
+   * Constant for the month of October.
+   */
+  private static final int MES_OUTUBRO = 10;
+
+  /**
+   * Constant for the month of December.
+   */
+  private static final int MES_DEZEMBRO = 12;
+
+  /**
    * The main method of the application.
    *
    * @param args The command line arguments (not used).
@@ -25,31 +39,34 @@ public class ProjedataApplication {
     DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     NumberFormat formatterSalario = NumberFormat.getInstance(Locale.of("pt", "BR"));
 
-    List<Funcionario> funcionarios = new ArrayList<>();
-
     // 3.1 – Inserir todos os funcionários, na mesma ordem e informações da tabela acima.
-    funcionarios.add(new Funcionario("Maria", LocalDate.of(2000, 10, 18), new BigDecimal("2009.44"), "Operador"));
-    funcionarios.add(new Funcionario("João", LocalDate.of(1990, 5, 12), new BigDecimal("2284.38"), "Operador"));
-    funcionarios.add(new Funcionario("Caio", LocalDate.of(1961, 5, 12), new BigDecimal("9836.14"), "Coordenador"));
-    funcionarios.add(new Funcionario("Miguel", LocalDate.of(1988, 10, 14), new BigDecimal("19119.88"), "Diretor"));
-    funcionarios.add(new Funcionario("Alice", LocalDate.of(1995, 1, 5), new BigDecimal("2234.68"), "Recepcionista"));
-    funcionarios.add(new Funcionario("Heitor", LocalDate.of(1999, 11, 19), new BigDecimal("1582.72"), "Operador"));
-    funcionarios.add(new Funcionario("Arthur", LocalDate.of(1993, 3, 31), new BigDecimal("4071.84"), "Contador"));
-    funcionarios.add(new Funcionario("Laura", LocalDate.of(1994, 7, 8), new BigDecimal("3017.45"), "Gerente"));
-    funcionarios.add(new Funcionario("Heloísa", LocalDate.of(2003, 5, 24), new BigDecimal("1606.85"), "Eletricista"));
-    funcionarios.add(new Funcionario("Helena", LocalDate.of(1996, 9, 2), new BigDecimal("2799.93"), "Gerente"));
+    List<Object[]> dadosFuncionarios = List.of(
+        new Object[]{"Maria", 2000, 10, 18, "2009.44", "Operador"},
+        new Object[]{"João", 1990, 5, 12, "2284.38", "Operador"},
+        new Object[]{"Caio", 1961, 5, 12, "9836.14", "Coordenador"},
+        new Object[]{"Miguel", 1988, 10, 14, "19119.88", "Diretor"},
+        new Object[]{"Alice", 1995, 1, 5, "2234.68", "Recepcionista"},
+        new Object[]{"Heitor", 1999, 11, 19, "1582.72", "Operador"},
+        new Object[]{"Arthur", 1993, 3, 31, "4071.84", "Contador"},
+        new Object[]{"Laura", 1994, 7, 8, "3017.45", "Gerente"},
+        new Object[]{"Heloísa", 2003, 5, 24, "1606.85", "Eletricista"},
+        new Object[]{"Helena", 1996, 9, 2, "2799.93", "Gerente"}
+    );
+
+    List<Funcionario> funcionarios = FuncionarioFactory.criarFuncionarios(dadosFuncionarios);
+
 
     // 3.2 – Remover o funcionário “João” da lista.
     funcionarios.removeIf(f -> f.getNome().equalsIgnoreCase("João"));
 
     // 3.3 – Imprimir todos os funcionários com todas suas informações, sendo que:
-    //• informação de data deve ser exibido no formato dd/mm/aaaa;
-    //• informação de valor numérico deve ser exibida no formatado com separador de milhar como ponto e decimal como vírgula
+    //  • informação de data deve ser exibido no formato dd/mm/aaaa;
+    //  • informação de valor numérico deve ser exibida no formatado com separador de milhar como ponto e decimal como vírgula
     System.out.println("Lista de Funcionários:");
-    funcionarios.forEach(f -> System.out.println("Nome: " + f.getNome() +
-        ", Data Nascimento: " + f.getDataNascimento().format(formatterData) +
-        ", Função: " + f.getFuncao() +
-        ", Salário: R$ " + formatterSalario.format(f.getSalario())));
+    funcionarios.forEach(f -> System.out.println("Nome: " + f.getNome()
+        + ", Data Nascimento: " + f.getDataNascimento().format(formatterData)
+        + ", Função: " + f.getFuncao()
+        + ", Salário: R$ " + formatterSalario.format(f.getSalario())));
 
     // 3.4 – Os funcionários receberam 10% de aumento de salário, atualizar a lista de funcionários com novo valor.
     funcionarios.forEach(f -> f.setSalario(f.getSalario().multiply(new BigDecimal("1.1"))));
@@ -68,7 +85,7 @@ public class ProjedataApplication {
     // 3.8 – Imprimir os funcionários que fazem aniversário no mês 10 e 12.
     System.out.println("\nAniversariantes dos meses 10 e 12:");
     funcionarios.stream()
-        .filter(f -> f.getDataNascimento().getMonthValue() == 10 || f.getDataNascimento().getMonthValue() == 12)
+        .filter(f -> f.getDataNascimento().getMonthValue() == MES_OUTUBRO || f.getDataNascimento().getMonthValue() == MES_DEZEMBRO)
         .forEach(f -> System.out.println(f.getNome() + " - " + f.getDataNascimento().format(formatterData)));
 
     // 3.9 – Imprimir o funcionário com a maior idade, exibir os atributos: nome e idade.
