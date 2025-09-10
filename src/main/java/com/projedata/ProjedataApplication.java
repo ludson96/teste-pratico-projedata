@@ -9,8 +9,17 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 import main.java.com.projedata.model.Funcionario;
-
+/**
+ * Main class for the Projedata application.
+ * This class contains the main method, which performs operations for handling
+ * a list of employees.
+ */
 public class ProjedataApplication {
+  /**
+   * The main method of the application.
+   *
+   * @param args The command line arguments (not used).
+   */
   public static void main(String[] args) {
     DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     NumberFormat formatterSalario = NumberFormat.getInstance(Locale.of("pt", "BR"));
