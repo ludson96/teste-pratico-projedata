@@ -1,8 +1,3 @@
-/**
- * Classe principal da aplicação Projedata.
- * Esta classe contém o métod principal, que executa as operações de manipulação
- * de uma lista de funcionários.
- */
 package main.java.com.projedata;
 
 import java.math.BigDecimal;
@@ -16,11 +11,6 @@ import java.util.stream.Collectors;
 import main.java.com.projedata.model.Funcionario;
 
 public class ProjedataApplication {
-  /**
-   * O métod principal da aplicação.
-   *
-   * @param args Os argumentos da linha de comando (não utilizados).
-   */
   public static void main(String[] args) {
     DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     NumberFormat formatterSalario = NumberFormat.getInstance(Locale.of("pt", "BR"));
@@ -56,14 +46,14 @@ public class ProjedataApplication {
         .collect(Collectors.groupingBy(Funcionario::getFuncao));
 
     // 3.6 – Imprimir os funcionários, agrupados por função.
-    System.out.println("Funcionários por Função");
+    System.out.println("\nFuncionários por Função");
     agrupadosPorFuncao.forEach((funcao, lista) -> {
       System.out.println(funcao + ":");
       lista.forEach(f -> System.out.println(" - " + f.getNome()));
     });
 
     // 3.8 – Imprimir os funcionários que fazem aniversário no mês 10 e 12.
-    System.out.println("Aniversariantes dos meses 10 e 12:");
+    System.out.println("\nAniversariantes dos meses 10 e 12:");
     funcionarios.stream()
         .filter(f -> f.getDataNascimento().getMonthValue() == 10 || f.getDataNascimento().getMonthValue() == 12)
         .forEach(f -> System.out.println(f.getNome() + " - " + f.getDataNascimento().format(formatterData)));
@@ -76,11 +66,11 @@ public class ProjedataApplication {
       Period periodo = Period.between(maisVelho.getDataNascimento(), LocalDate.now());
       int idade = periodo.getYears();
 
-      System.out.println("Funcionário mais velho:" + maisVelho.getNome() + " - " + idade + " anos");
+      System.out.println("\nFuncionário mais velho:\n" + maisVelho.getNome() + " - " + idade + " anos");
     }
 
     // 3.10 – Imprimir a lista de funcionários por ordem alfabética.
-    System.out.println("Funcionários por ordem alfabética:");
+    System.out.println("\nFuncionários por ordem alfabética:");
     funcionarios.stream()
         .sorted(Comparator.comparing(Funcionario::getNome))
         .forEach(f -> System.out.println(f.getNome()));
@@ -89,11 +79,11 @@ public class ProjedataApplication {
     BigDecimal totalSalarios = funcionarios.stream()
         .map(Funcionario::getSalario)
         .reduce(BigDecimal.ZERO, BigDecimal::add);
-    System.out.println("Total de salários:R$ " + formatterSalario.format(totalSalarios));
+    System.out.println("\nTotal de salários:\nR$ " + formatterSalario.format(totalSalarios));
 
     // 3.12 – Imprimir quantos salários mínimos ganha cada funcionário, considerando que o salário mínimo é R$ 1212.00.
     BigDecimal salarioMinimo = new BigDecimal("1212");
-    System.out.println("Salários mínimos por funcionário:");
+    System.out.println("\nSalários mínimos por funcionário:");
     funcionarios.forEach(f -> {
       BigDecimal qtdSalariosMinimos = f.getSalario().divide(salarioMinimo, 2, RoundingMode.HALF_UP);
       System.out.println(f.getNome() + ": " + qtdSalariosMinimos + " salários mínimos");
