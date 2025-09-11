@@ -23,8 +23,35 @@ Esta é uma aplicação Java de console que gerencia uma lista de funcionários,
 classDiagram
     direction LR
 
+    class ProjedataApplication {
+        +main(String[] args) void
+    }
+
+    class Pessoa {
+        -String nome
+        -LocalDate dataNascimento
+        +getNome() String
+        +setNome(String nome) void
+        +getDataNascimento() LocalDate
+        +setDataNascimento(LocalDate dataNascimento) void
+    }
+
+    class Funcionario {
+        -BigDecimal salario
+        -String funcao
+        +getSalario() BigDecimal
+        +setSalario(BigDecimal salario) void
+        +getFuncao() String
+        +setFuncao(String funcao) void
+    }
+
+    class FuncionarioFactory {
+        <<Factory>>
+        +criarFuncionarios(List~FuncionarioDTO~) List~Funcionario~
+    }
+
     class FuncionarioDTO {
-        <<DTO>>
+        <<Record>>
         +String nome
         +int ano
         +int mes
@@ -33,30 +60,11 @@ classDiagram
         +String funcao
     }
 
-    class Pessoa {
-        -String nome
-        -LocalDate dataNascimento
-    }
-
-    class Funcionario {
-        -BigDecimal salario
-        -String funcao
-        +toString() String
-    }
-
-    class FuncionarioFactory {
-        +criarFuncionarios(List~FuncionarioDTO~) List~Funcionario~
-    }
-
-    class ProjedataApplication {
-        +main(String[] args) void
-    }
-
-    Pessoa <|-- Funcionario : Herda de
-    ProjedataApplication ..> FuncionarioDTO : Cria dados
-    ProjedataApplication ..> FuncionarioFactory : Usa
-    FuncionarioFactory ..> FuncionarioDTO : Recebe como parâmetro
-    FuncionarioFactory ..> Funcionario : Cria
+    Pessoa <|-- Funcionario
+    ProjedataApplication ..> FuncionarioFactory : uses
+    ProjedataApplication ..> Funcionario : uses
+    FuncionarioFactory ..> FuncionarioDTO : uses
+    FuncionarioFactory ..> Funcionario : creates
 ```
 
 ## 🚀 Como Executar
