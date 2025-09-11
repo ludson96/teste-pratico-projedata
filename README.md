@@ -21,25 +21,31 @@ Esta é uma aplicação Java de console que gerencia uma lista de funcionários,
 
 ```mermaid
 classDiagram
+    direction LR
+
+    class FuncionarioDTO {
+        <<DTO>>
+        +String nome
+        +int ano
+        +int mes
+        +int dia
+        +String salario
+        +String funcao
+    }
+
     class Pessoa {
         -String nome
         -LocalDate dataNascimento
-        +Pessoa(String, LocalDate)
-        +getNome() String
-        +getDataNascimento() LocalDate
     }
 
     class Funcionario {
         -BigDecimal salario
         -String funcao
-        +Funcionario(String, LocalDate, BigDecimal, String)
-        +getSalario() BigDecimal
-        +getFuncao() String
         +toString() String
     }
 
     class FuncionarioFactory {
-        +criarFuncionarios(List~Object[]~) List~Funcionario~
+        +criarFuncionarios(List~FuncionarioDTO~) List~Funcionario~
     }
 
     class ProjedataApplication {
@@ -47,8 +53,9 @@ classDiagram
     }
 
     Pessoa <|-- Funcionario : Herda de
+    ProjedataApplication ..> FuncionarioDTO : Cria dados
     ProjedataApplication ..> FuncionarioFactory : Usa
-    ProjedataApplication ..> Funcionario : Usa
+    FuncionarioFactory ..> FuncionarioDTO : Recebe como parâmetro
     FuncionarioFactory ..> Funcionario : Cria
 ```
 
