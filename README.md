@@ -17,6 +17,41 @@ Esta é uma aplicação Java de console que gerencia uma lista de funcionários,
 - Relatórios de aniversariantes, funcionário mais velho, ordem alfabética e total de salários.
 - Cálculo de salários em múltiplos do salário mínimo.
 
+## 🏛️ Arquitetura do Projeto
+
+```mermaid
+classDiagram
+    class Pessoa {
+        -String nome
+        -LocalDate dataNascimento
+        +Pessoa(String, LocalDate)
+        +getNome() String
+        +getDataNascimento() LocalDate
+    }
+
+    class Funcionario {
+        -BigDecimal salario
+        -String funcao
+        +Funcionario(String, LocalDate, BigDecimal, String)
+        +getSalario() BigDecimal
+        +getFuncao() String
+        +toString() String
+    }
+
+    class FuncionarioFactory {
+        +criarFuncionarios(List~Object[]~) List~Funcionario~
+    }
+
+    class ProjedataApplication {
+        +main(String[] args) void
+    }
+
+    Pessoa <|-- Funcionario : Herda de
+    ProjedataApplication ..> FuncionarioFactory : Usa
+    ProjedataApplication ..> Funcionario : Usa
+    FuncionarioFactory ..> Funcionario : Cria
+```
+
 ## 🚀 Como Executar
 
 1. **Pré-requisitos:** É necessário ter o Java JDK (versão 17 ou superior) e o Git instalados.
