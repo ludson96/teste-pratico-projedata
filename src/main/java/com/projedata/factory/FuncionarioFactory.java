@@ -2,8 +2,9 @@ package main.java.com.projedata.factory;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import main.java.com.projedata.DTO.FuncionarioDTO;
 import main.java.com.projedata.model.Funcionario;
 
 /**
@@ -26,17 +27,15 @@ public class FuncionarioFactory {
    *              </ul>
    * @return A list of {@link Funcionario} objects.
    */
-  public static List<Funcionario> criarFuncionarios(List<Object[]> dados) {
-    List<Funcionario> funcionarios = new ArrayList<>();
-
-    for (Object[] d : dados) {
-      funcionarios.add(new Funcionario(
-          (String) d[0],               // nome
-          LocalDate.of((int) d[1], (int) d[2], (int) d[3]), // ano, mes, dia
-          new BigDecimal((String) d[4]), // salario
-          (String) d[5]                 // função
-      ));
-    }
-    return funcionarios;
+  public static List<Funcionario> criarFuncionarios(List<FuncionarioDTO> dados) {
+    return dados.stream()
+        .map(d -> new Funcionario(
+            d.nome(),
+            LocalDate.of(d.ano(), d.mes(), d.dia()),
+            new BigDecimal(d.salario()),
+            d.funcao()
+        ))
+        .collect(Collectors.toList());
   }
+
 }

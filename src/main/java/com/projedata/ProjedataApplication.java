@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
+import main.java.com.projedata.DTO.FuncionarioDTO;
 import main.java.com.projedata.factory.FuncionarioFactory;
 import main.java.com.projedata.model.Funcionario;
 
@@ -40,17 +41,17 @@ public class ProjedataApplication {
     NumberFormat formatterSalario = NumberFormat.getInstance(Locale.of("pt", "BR"));
 
     // 3.1 – Inserir todos os funcionários, na mesma ordem e informações da tabela acima.
-    List<Object[]> dadosFuncionarios = List.of(
-        new Object[]{"Maria", 2000, 10, 18, "2009.44", "Operador"},
-        new Object[]{"João", 1990, 5, 12, "2284.38", "Operador"},
-        new Object[]{"Caio", 1961, 5, 12, "9836.14", "Coordenador"},
-        new Object[]{"Miguel", 1988, 10, 14, "19119.88", "Diretor"},
-        new Object[]{"Alice", 1995, 1, 5, "2234.68", "Recepcionista"},
-        new Object[]{"Heitor", 1999, 11, 19, "1582.72", "Operador"},
-        new Object[]{"Arthur", 1993, 3, 31, "4071.84", "Contador"},
-        new Object[]{"Laura", 1994, 7, 8, "3017.45", "Gerente"},
-        new Object[]{"Heloísa", 2003, 5, 24, "1606.85", "Eletricista"},
-        new Object[]{"Helena", 1996, 9, 2, "2799.93", "Gerente"}
+    List<FuncionarioDTO> dadosFuncionarios = List.of(
+        new FuncionarioDTO("Maria", 2000, 10, 18, "2009.44", "Operador"),
+        new FuncionarioDTO("João", 1990, 5, 12, "2284.38", "Operador"),
+        new FuncionarioDTO("Caio", 1961, 5, 12, "9836.14", "Coordenador"),
+        new FuncionarioDTO("Miguel", 1988, 10, 14, "19119.88", "Diretor"),
+        new FuncionarioDTO("Alice", 1995, 1, 5, "2234.68", "Recepcionista"),
+        new FuncionarioDTO("Heitor", 1999, 11, 19, "1582.72", "Operador"),
+        new FuncionarioDTO("Arthur", 1993, 3, 31, "4071.84", "Contador"),
+        new FuncionarioDTO("Laura", 1994, 7, 8, "3017.45", "Gerente"),
+        new FuncionarioDTO("Heloísa", 2003, 5, 24, "1606.85", "Eletricista"),
+        new FuncionarioDTO("Helena", 1996, 9, 2, "2799.93", "Gerente")
     );
 
     List<Funcionario> funcionarios = FuncionarioFactory.criarFuncionarios(dadosFuncionarios);
