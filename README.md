@@ -21,10 +21,10 @@ Esta é uma aplicação Java de console que gerencia uma lista de funcionários,
 
 1. **Pré-requisitos:** É necessário ter o Java JDK (versão 17 ou superior) e o Git instalados.
 
-2. **Clone o repositório via SSH:**
+2. **Clone o repositório:**
 
     ```bash
-    git clone git@github.com:ludson96/teste-pratico-projedata.git
+    git clone https://github.com/ludson96/teste-pratico-projedata.git
     ```
 
 3. **Abra o projeto** em sua IDE de preferência (IntelliJ IDEA, Eclipse, VS Code).
