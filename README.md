@@ -1,6 +1,13 @@
 # 🚀 API de Gestão de Funcionários - `Projedata`
 
+🌍 Read this in [English](README.en.md)
+
 API RESTful corporativa desenvolvida em **Java 21** e **Spring Boot 3**, aplicando persistência de dados com **Spring Data JPA**, banco em memória **H2 Database**, documentação interativa via **Swagger UI (OpenAPI 3)**, validação de payload com **Bean Validation**, testes unitários automatizados com **JUnit 5 / Mockito** e containerização completa com **Docker & Docker Compose**.
+
+## 🌐 Demonstração Online do Swagger
+
+Acesse a aplicação em produção:
+👉 **[Swagger](https://teste-pratico-projedata-4kpw.onrender.com)**
 
 ## 📝 Sobre o Projeto
 
