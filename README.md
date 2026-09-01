@@ -10,25 +10,7 @@ A aplicação gerencia um conjunto de funcionários com regras de negócio espec
 
 ## 🖼️ Preview
 
-Ao iniciar a aplicação, a documentação interativa completa do **Swagger UI** e o console web do **H2 Database** ficam imediatamente disponíveis para execução e testes em tempo real:
-
-```text
-┌──────────────────────────────────────────────────────────────────────────────────┐
-│  Swagger UI - API de Gestão de Funcionários (v1.0.0)                             │
-│  http://localhost:8080/swagger-ui.html                                           │
-├──────────────────────────────────────────────────────────────────────────────────┤
-│  [GET]    /api/v1/funcionarios                    Listar todos os funcionários   │
-│  [POST]   /api/v1/funcionarios                    Cadastrar novo funcionário     │
-│  [GET]    /api/v1/funcionarios/{id}               Buscar funcionário por ID      │
-│  [DELETE] /api/v1/funcionarios/{id}               Remover funcionário por ID     │
-│  [DELETE] /api/v1/funcionarios/nome/{nome}        Remover funcionário por Nome   │
-│  [PATCH]  /api/v1/funcionarios/reajuste           Aplicar reajuste salarial (%)  │
-│  [GET]    /api/v1/funcionarios/agrupados-por-funcao  Agrupar por função          │
-│  [GET]    /api/v1/funcionarios/aniversariantes    Filtrar aniversariantes        │
-│  [GET]    /api/v1/funcionarios/mais-velho         Funcionário de maior idade     │
-│  [GET]    /api/v1/funcionarios/estatisticas/folha Estatísticas e salários mínimos│
-└──────────────────────────────────────────────────────────────────────────────────┘
-```
+<img src="./image/projeto.gif" alt="Demonstração do App" />
 
 ## 🌐 API Endpoints
 
