@@ -1,71 +1,47 @@
-package main.java.com.projedata.model;
+package com.projedata.model;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 /**
- * Represents an employee, extending the Pessoa class.
- * This class includes information about the employee's salary and job function.
+ * Entidade que representa um funcionário, estendendo a classe Pessoa.
  */
+@Entity
+@Table(name = "tb_funcionarios")
 public class Funcionario extends Pessoa {
 
-  /**
-   * The employee's salary.
-   */
-  private BigDecimal salario;
+    @Column(nullable = false, precision = 12, scale = 2)
+    private BigDecimal salario;
 
-  /**
-   * The employee's job function or role.
-   */
-  private String funcao;
+    @Column(nullable = false, length = 50)
+    private String funcao;
 
-  /**
-   * Constructs a new Funcionario object.
-   *
-   * @param nome           The employee's name.
-   * @param dataNascimento The employee's date of birth.
-   * @param salario        The employee's salary.
-   * @param funcao         The employee's job function.
-   */
-  public Funcionario(String nome, LocalDate dataNascimento, BigDecimal salario, String funcao) {
-    super(nome, dataNascimento);
-    this.salario = salario;
-    this.funcao = funcao;
-  }
+    public Funcionario() {
+        super();
+    }
 
-  /**
-   * Gets the employee's salary.
-   *
-   * @return The salary as a BigDecimal.
-   */
-  public BigDecimal getSalario() {
-    return salario;
-  }
+    public Funcionario(String nome, LocalDate dataNascimento, BigDecimal salario, String funcao) {
+        super(nome, dataNascimento);
+        this.salario = salario;
+        this.funcao = funcao;
+    }
 
-  /**
-   * Sets the employee's salary.
-   *
-   * @param salario The new salary to set.
-   */
-  public void setSalario(BigDecimal salario) {
-    this.salario = salario;
-  }
+    public BigDecimal getSalario() {
+        return salario;
+    }
 
-  /**
-   * Gets the employee's job function.
-   *
-   * @return The job function as a String.
-   */
-  public String getFuncao() {
-    return funcao;
-  }
+    public void setSalario(BigDecimal salario) {
+        this.salario = salario;
+    }
 
-  /**
-   * Sets the employee's job function.
-   *
-   * @param funcao The new job function to set.
-   */
-  public void setFuncao(String funcao) {
-    this.funcao = funcao;
-  }
+    public String getFuncao() {
+        return funcao;
+    }
+
+    public void setFuncao(String funcao) {
+        this.funcao = funcao;
+    }
 }

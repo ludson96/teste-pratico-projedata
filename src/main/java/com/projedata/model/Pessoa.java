@@ -1,67 +1,71 @@
-package main.java.com.projedata.model;
+package com.projedata.model;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.MappedSuperclass;
 import java.time.LocalDate;
+import java.util.Objects;
 
 /**
- * Represents a person with a name and date of birth.
+ * Superclasse que representa uma pessoa com atributos comuns.
  */
-public class Pessoa {
+@MappedSuperclass
+public abstract class Pessoa {
 
-  /**
-   * The person's name.
-   */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-  private String nome;
-  /**
-   * The person's date of birth.
-   */
+    @Column(nullable = false, length = 100)
+    private String nome;
 
-  private LocalDate dataNascimento;
+    @Column(nullable = false, name = "data_nascimento")
+    private LocalDate dataNascimento;
 
-  /**
-   * Constructs a new Pessoa object.
-   *
-   * @param nome           The person's name.
-   * @param dataNascimento The person's date of birth.
-   */
-  public Pessoa(String nome, LocalDate dataNascimento) {
-    this.nome = nome;
-    this.dataNascimento = dataNascimento;
-  }
+    public Pessoa() {
+    }
 
-  /**
-   * Gets the person's name.
-   *
-   * @return The name as a String.
-   */
-  public String getNome() {
-    return nome;
-  }
+    public Pessoa(String nome, LocalDate dataNascimento) {
+        this.nome = nome;
+        this.dataNascimento = dataNascimento;
+    }
 
-  /**
-   * Sets the person's name.
-   *
-   * @param nome The new name to set.
-   */
-  public void setNome(String nome) {
-    this.nome = nome;
-  }
+    public Long getId() {
+        return id;
+    }
 
-  /**
-   * Gets the person's date of birth.
-   *
-   * @return The date of birth as a LocalDate.
-   */
-  public LocalDate getDataNascimento() {
-    return dataNascimento;
-  }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-  /**
-   * Sets the person's date of birth.
-   *
-   * @param dataNascimento The new date of birth to set.
-   */
-  public void setDataNascimento(LocalDate dataNascimento) {
-    this.dataNascimento = dataNascimento;
-  }
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public LocalDate getDataNascimento() {
+        return dataNascimento;
+    }
+
+    public void setDataNascimento(LocalDate dataNascimento) {
+        this.dataNascimento = dataNascimento;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Pessoa pessoa = (Pessoa) o;
+        return Objects.equals(id, pessoa.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
+    }
 }
