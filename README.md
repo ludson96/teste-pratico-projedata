@@ -1,52 +1,118 @@
-# 🚀 API de Gestão de Funcionários - `Projedata`
+# 🚀 API de Gestão de Funcionários - Projedata
 
-🌍 Read this in [English](README.en.md)
+[![Java 21](https://img.shields.io/badge/Java-21-orange.svg?style=for-the-badge&logo=openjdk)](https://www.oracle.com/java/)
+[![Spring Boot 3](https://img.shields.io/badge/Spring_Boot-3.4.3-6DB33F.svg?style=for-the-badge&logo=spring-boot)](https://spring.io/projects/spring-boot)
+[![Docker](https://img.shields.io/badge/Docker-Enabled-2496ED.svg?style=for-the-badge&logo=docker)](https://www.docker.com/)
+[![Swagger](https://img.shields.io/badge/Swagger-OpenAPI_3-85EA2D.svg?style=for-the-badge&logo=swagger)](https://swagger.io/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
-API RESTful corporativa desenvolvida em **Java 21** e **Spring Boot 3**, aplicando persistência de dados com **Spring Data JPA**, banco em memória **H2 Database**, documentação interativa via **Swagger UI (OpenAPI 3)**, validação de payload com **Bean Validation**, testes unitários automatizados com **JUnit 5 / Mockito** e containerização completa com **Docker & Docker Compose**.
+> 🇧🇷 **Português** | 🇺🇸 [**English Version**](README.en.md)
 
-## 🌐 Demonstração Online do Swagger
+API RESTful corporativa de alta performance para administração de funcionários, folhas de pagamento, reajustes percentuais em lote e cálculos estatísticos. Construída com **Java 21 LTS**, **Spring Boot 3.4.3**, **Spring Data JPA**, banco de dados em memória **H2**, documentação interativa via **Swagger UI (OpenAPI 3)** e containerização com **Docker & Docker Compose**.
 
-Acesse a aplicação em produção:
-👉 **[Swagger](https://teste-pratico-projedata-4kpw.onrender.com)**
+## 📌 Sumário / Navegação Rápida
+
+- [📝 Sobre o Projeto](#-sobre-o-projeto)
+- [🖼️ Preview](#️-preview)
+- [🌐 Demonstração Online do Swagger](#-demonstração-online-do-swagger)
+- [⚡ API Endpoints](#-api-endpoints)
+- [✨ Funcionalidades](#-funcionalidades)
+- [🛠️ Tecnologias e Ferramentas Utilizadas](#️-tecnologias-e-ferramentas-utilizadas)
+- [🏛️ Arquitetura da Solução](#️-arquitetura-da-solução)
+- [📁 Estrutura do Repositório](#-estrutura-do-repositório)
+- [💡 Decisões Técnicas](#-decisões-técnicas)
+- [🚀 Como Executar o Projeto](#-como-executar-o-projeto)
+  - [Pré-requisitos](#pré-requisitos)
+  - [Opção 1: Via Docker Compose (Recomendado)](#opção-1-via-docker-compose-recomendado)
+  - [Opção 2: Via Maven CLI](#opção-2-via-maven-cli)
+  - [Opção 3: Execução em IDE](#opção-3-execução-em-ide)
+- [🔍 Acessos e Links Úteis em Execução](#-acessos-e-links-úteis-em-execução)
+- [📄 Licença](#-licença)
 
 ## 📝 Sobre o Projeto
 
-Este projeto foi desenvolvido originalmente como resolução do teste prático técnico da **Projedata** (para a vaga de Desenvolvedor de Software) e evoluído para uma arquitetura profissional em camadas (*Controller*, *Service*, *Repository*, *Model*, *DTO*).
+Este projeto foi concebido originalmente a partir dos requisitos do teste prático técnico da **Projedata** para Desenvolvedor de Software e elevado para os mais rigorosos padrões da engenharia de software corporativa.
 
-A aplicação gerencia um conjunto de funcionários com regras de negócio específicas, incluindo reajustes salariais percentuais em lote, cálculo de idade, agrupamento dinâmico por cargos, filtros de aniversariantes e apuração estatística da folha de pagamento baseada em múltiplos do salário mínimo vigente.
+A aplicação modela a gestão completa do quadro de colaboradores da organização (`Pessoa` e `Funcionario`), orquestrando operações de cadastro, remoção por ID e por nome, aplicação de aumentos percentuais sincronizados em base de dados, agregação por cargo/função, filtros de aniversariantes específicos (meses 10 e 12), localização do colaborador com maior idade cronológica e cálculo da proporção da folha salarial individual em relação ao salário mínimo vigente.
 
 ## 🖼️ Preview
 
-<img src="./image/projeto.gif" alt="Demonstração do App" />
+<div align="center">
+  <img src="./image/projeto.gif" alt="Demonstração do App" width="850px" />
+</div>
 
-## 🌐 API Endpoints
+## 🌐 Demonstração Online do Swagger
 
-A API segue os padrões RESTful com retorno estruturado em JSON e códigos HTTP semânticos:
+A aplicação está implantada e disponível na nuvem para experimentação em tempo real:
 
-| Método | Endpoint | Descrição | Parâmetros / Query Params |
+👉 **[https://teste-pratico-projedata-4kpw.onrender.com/](https://teste-pratico-projedata-4kpw.onrender.com/)**
+
+> O acesso à raiz `/` redireciona automaticamente para o Swagger UI (`/swagger-ui/index.html`).
+
+## ⚡ API Endpoints
+
+A API é orientada pelo padrão RESTful, fornecendo payloads estruturados em JSON, tratamento consistente de códigos de status HTTP e validação automática.
+
+| Método | Endpoint | Descrição | Parâmetros / Corpo |
 | :--- | :--- | :--- | :--- |
 | `GET` | `/api/v1/funcionarios` | Lista todos os funcionários | `ordenarPorNome=true/false` *(default: false)* |
-| `GET` | `/api/v1/funcionarios/{id}` | Busca funcionário por ID | `id` *(path variable)* |
-| `POST` | `/api/v1/funcionarios` | Cadastra um novo funcionário | Body JSON (`FuncionarioRequestDTO`) |
-| `DELETE` | `/api/v1/funcionarios/{id}` | Remove funcionário por ID | `id` *(path variable)* |
-| `DELETE` | `/api/v1/funcionarios/nome/{nome}` | Remove funcionário por Nome | `nome` *(path variable)* |
-| `PATCH` | `/api/v1/funcionarios/reajuste` | Aplica aumento percentual a todos | `percentual=10.0` *(default: 10.0)* |
-| `GET` | `/api/v1/funcionarios/agrupados-por-funcao` | Agrupa os funcionários por cargo | — |
-| `GET` | `/api/v1/funcionarios/aniversariantes` | Filtra aniversariantes por meses | `meses=10,12` *(default: 10,12)* |
-| `GET` | `/api/v1/funcionarios/mais-velho` | Retorna o funcionário mais idoso e idade | — |
-| `GET` | `/api/v1/funcionarios/estatisticas/folha` | Total da folha e salários mínimos por pessoa | `salarioMinimo=1212.00` *(default: 1212.00)* |
+| `GET` | `/api/v1/funcionarios/{id}` | Recupera funcionário por ID | `id` *(path variable)* |
+| `POST` | `/api/v1/funcionarios` | Cadastra um novo funcionário | JSON Body (`FuncionarioRequestDTO`) |
+| `DELETE` | `/api/v1/funcionarios/{id}` | Exclui funcionário por ID | `id` *(path variable)* |
+| `DELETE` | `/api/v1/funcionarios/nome/{nome}` | Exclui funcionário por Nome *(Req. 3.2)* | `nome` *(path variable)* |
+| `PATCH` | `/api/v1/funcionarios/reajuste` | Aplica reajuste salarial percentual a todos *(Req. 3.4)* | `percentual` *(query param, default: 10.0)* |
+| `GET` | `/api/v1/funcionarios/agrupados-por-funcao` | Agrupa a lista de funcionários por cargo *(Req. 3.5 e 3.6)* | Nenhum |
+| `GET` | `/api/v1/funcionarios/aniversariantes` | Filtra aniversariantes por mês *(Req. 3.8)* | `meses` *(query param, default: 10,12)* |
+| `GET` | `/api/v1/funcionarios/mais-velho` | Retorna o funcionário mais idoso com idade calculada *(Req. 3.9)* | Nenhum |
+| `GET` | `/api/v1/funcionarios/estatisticas/folha` | Total da folha e múltiplos de salários mínimos *(Req. 3.11 e 3.12)* | `salarioMinimo` *(query param, default: 1212.00)* |
 
 ## ✨ Funcionalidades
 
-- [x] **Carga Inicial Automática (Requisito 3.1):** Povoamento idempotente do banco com os 10 funcionários na inicialização via `DataInitializer`.
-- [x] **Remoção de Funcionários (Requisito 3.2):** Exclusão por nome (ex: "João") ou por chave primária ID.
-- [x] **Formatação e Exibição de Dados (Requisito 3.3):** Datas em padrão ISO/Custom e valores monetários com precisão decimal.
-- [x] **Reajuste Salarial Dinâmico (Requisito 3.4):** Aumento percentual em lote (ex: 10%) recalculando a folha no banco.
-- [x] **Agrupamento por Cargo (Requisitos 3.5 & 3.6):** Mapeamento dinâmico agrupando listas de funcionários por função exercida.
-- [x] **Aniversariantes do Período (Requisito 3.8):** Consulta flexível para os meses 10 (outubro) e 12 (dezembro).
-- [x] **Cálculo de Maior Idade (Requisito 3.9):** Apuração do funcionário mais velho calculando anos completos com `java.time.Period`.
-- [x] **Ordenação Alfabética (Requisito 3.10):** Consulta com ordenação ascendente por nome.
-- [x] **Totalização e Múltiplos Salariais (Requisitos 3.11 & 3.12):** Soma total dos salários e cálculo de quantos salários mínimos cada colaborador recebe.
+- **Carga Inicial Automática:** Alimentação idempotente no startup da aplicação com os 10 colaboradores da especificação técnica via `DataInitializer`.
+- **Remoção de Colaboradores:** Exclusão dinâmica por nome (ex: "João") e por identificador único primário.
+- **Formatação e Exibição de Dados:** Respostas serializadas com precisão monetária e formatação cronológica padrão.
+- **Reajuste Salarial Coletivo:** Atualização transacional em lote do percentual informado (ex: +10%) com arredondamento estrito em `BigDecimal`.
+- **Agrupamento por Função/Cargo:** Agrupamento relacional dinâmico `Map<String, List<Funcionario>>` através da Stream API.
+- **Filtro de Aniversariantes:** Consulta flexível parametrizada por lista de meses (com padrão para os meses 10 e 12).
+- **Identificação de Maior Idade :** Localização do colaborador mais experiente calculando a idade exata em anos com `java.time.Period`.
+- **Ordenação Alfabética :** Consulta com suporte a ordenação nominal alfabética via query param `ordenarPorNome`.
+- **Apuração Salarial e Estatísticas de Folha:** Somatório total da folha e indicador de quantos salários mínimos cada profissional recebe com base no piso parametrizado.
+
+## 🛠️ Tecnologias e Ferramentas Utilizadas
+
+| Camada / Finalidade | Tecnologia | Descrição |
+| :--- | :--- | :--- |
+| **Linguagem Principal** | **Java 21 LTS** | Uso de Records, Pattern Matching e melhorias do compilador |
+| **Framework Web** | **Spring Boot 3.4.3** | Ecossistema moderno de injeção de dependências e microsserviços |
+| **Persistência de Dados** | **Spring Data JPA / Hibernate** | Mapeamento Objeto-Relacional limpo com `@MappedSuperclass` |
+| **Banco de Dados** | **H2 Database** | Banco relacional SQL em memória de rápida inicialização |
+| **Validação** | **Jakarta Bean Validation** | Validações automáticas declarativas via anotações nos DTOs |
+| **Documentação Interativa** | **Swagger UI / SpringDoc OpenAPI 2.8.5** | Especificação OpenAPI 3 viva e console de testes integrado |
+| **Testes Automatizados** | **JUnit 5 & Mockito** | Testes de unidade cobrindo serviços e regras financeiras |
+| **Containerização** | **Docker & Docker Compose** | Construção multi-stage em imagem leve Alpine |
+| **Gerenciador de Build** | **Apache Maven** | Gestão de ciclo de vida de compilação e dependências |
+
+## 🏛️ Arquitetura da Solução
+
+O sistema foi arquitetado em camadas estritas e desacopladas, seguindo os princípios de **Clean Architecture**, **SOLID** e **DDD (Domain-Driven Design)**:
+
+```mermaid
+flowchart TD
+    Client(["🌐 Cliente / Swagger UI / HTTP Client"]) --> Controller["🎮 Controller Layer (FuncionarioController)"]
+    Controller --> DTO["📦 DTOs (Request / Response Records)"]
+    Controller --> Service["⚙️ Service Layer (FuncionarioService)"]
+    Service --> Exception["🚨 Exception Handler (RFC 7807)"]
+    Service --> Repository["💾 Repository Layer (FuncionarioRepository)"]
+    Repository --> Model["🏛️ Domain Model (Funcionario extends Pessoa)"]
+    Repository --> Database[("🗄️ H2 In-Memory Database")]
+```
+
+- **Controller:** Ponto de entrada REST, roteamento, anotações Swagger OpenAPI e validação dos contratos de transporte.
+- **DTO (Data Transfer Objects):** Records imutáveis de transferência desacoplando a camada externa das entidades de persistência.
+- **Service:** Concentração das regras de negócio, cálculos financeiros com `BigDecimal`, transações com `@Transactional` e manipulação de fluxos com Java Streams.
+- **Repository:** Abstração de acesso a dados alavancando o Spring Data JPA e queries orientadas a métodos.
+- **Model:** Entidades de domínio mapeadas com JPA (`Pessoa` abstrata com `@MappedSuperclass` e `Funcionario` como entidade estendida).
+- **Exception Handler:** Interceptador global `@RestControllerAdvice` padronizando respostas de erro com a especificação RFC 7807 (`ProblemDetail`).
 
 ## 📁 Estrutura do Repositório
 
@@ -55,12 +121,13 @@ teste-pratico-projedata/
 ├── src/
 │   ├── main/
 │   │   ├── java/com/projedata/
-│   │   │   ├── config/              # Configurações do Swagger OpenAPI e Carga Inicial (DataInitializer)
+│   │   │   ├── config/              # Configurações do OpenAPI/Swagger e Seed do H2
 │   │   │   │   ├── DataInitializer.java
 │   │   │   │   └── OpenApiConfig.java
-│   │   │   ├── controller/          # Controladores REST com anotações OpenAPI
-│   │   │   │   └── FuncionarioController.java
-│   │   │   ├── dto/                 # Records DTO de Request, Response e Estatísticas
+│   │   │   ├── controller/          # Controladores REST da aplicação
+│   │   │   │   ├── FuncionarioController.java
+│   │   │   │   └── HomeController.java
+│   │   │   ├── dto/                 # Records DTO de transporte e estatísticas
 │   │   │   │   ├── FolhaEstatisticaResponseDTO.java
 │   │   │   │   ├── FuncionarioMaisVelhoResponseDTO.java
 │   │   │   │   ├── FuncionarioRequestDTO.java
@@ -71,112 +138,93 @@ teste-pratico-projedata/
 │   │   │   ├── model/               # Entidades de Domínio JPA
 │   │   │   │   ├── Funcionario.java
 │   │   │   │   └── Pessoa.java
-│   │   │   ├── repository/          # Repositórios Spring Data JPA
+│   │   │   ├── repository/          # Interfaces Spring Data JPA
 │   │   │   │   └── FuncionarioRepository.java
-│   │   │   ├── service/             # Camada de Regras de Negócio e Cálculos Financeiros
+│   │   │   ├── service/             # Camada de Serviços e Regras de Negócio
 │   │   │   │   └── FuncionarioService.java
-│   │   │   └── ProjedataApplication.java  # Classe Principal de Inicialização
+│   │   │   └── ProjedataApplication.java  # Ponto de entrada da aplicação
 │   │   └── resources/
-│   │       └── application.yml      # Configurações de Porta, H2 e Swagger UI
+│   │       └── application.yml      # Parâmetros de infraestrutura, H2 e Swagger
 │   └── test/
 │       └── java/com/projedata/
 │           └── service/
 │               └── FuncionarioServiceTest.java # Testes Unitários com JUnit 5 & Mockito
-├── Dockerfile                       # Build Multi-Stage com Eclipse Temurin JDK 21
-├── docker-compose.yml               # Orquestração do Container
-├── pom.xml                          # Gerenciador de Dependências Maven
-└── README.md                        # Documentação do Projeto
+├── Dockerfile                       # Multi-stage build com Eclipse Temurin JRE Alpine
+├── docker-compose.yml               # Orquestração do container de produção
+├── pom.xml                          # Dependências e plugins Maven
+├── LICENSE                          # Licença MIT do projeto
+├── README.md                        # Documentação em Português
+└── README.en.md                     # Documentação em Inglês
 ```
-
-## 🛠️ Tecnologias Utilizadas
-
-| Categoria | Tecnologia |
-| :--- | :--- |
-| **Linguagem** | [![Java][Java-logo]][Java-url] |
-| **Backend & Framework** | [![Spring Boot][Spring-Boot-logo]][Spring-Boot-url] [![Spring Data JPA][Spring-JPA-logo]][Spring-JPA-url] |
-| **Banco de Dados** | [![H2 Database][H2-logo]][H2-url] |
-| **Documentação API** | [![Swagger][Swagger-logo]][Swagger-url] [![OpenAPI][OpenAPI-logo]][OpenAPI-url] |
-| **Testes** | [![JUnit 5][JUnit5-logo]][JUnit5-url] [![Mockito][Mockito-logo]][Mockito-url] |
-| **DevOps & Containers** | [![Docker][Docker-logo]][Docker-url] [![Docker Compose][Docker-Compose-logo]][Docker-Compose-url] [![Maven][Maven-logo]][Maven-url] |
-| **Versionamento** | [![Git][Git-logo]][Git-url] |
-
-[Java-logo]: https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white
-[Java-url]: https://www.oracle.com/java/technologies/downloads/#java21
-[Spring-Boot-logo]: https://img.shields.io/badge/spring_boot-%236DB33F.svg?style=for-the-badge&logo=springboot&logoColor=white
-[Spring-Boot-url]: https://spring.io/projects/spring-boot
-[Spring-JPA-logo]: https://img.shields.io/badge/spring_data_jpa-%236DB33F.svg?style=for-the-badge&logo=hibernate&logoColor=white
-[Spring-JPA-url]: https://spring.io/projects/spring-data-jpa
-[H2-logo]: https://img.shields.io/badge/H2_Database-%23003B57.svg?style=for-the-badge&logo=h2&logoColor=white
-[H2-url]: https://www.h2database.com/
-[Swagger-logo]: https://img.shields.io/badge/Swagger-%2385EA2D.svg?style=for-the-badge&logo=swagger&logoColor=black
-[Swagger-url]: https://swagger.io/
-[OpenAPI-logo]: https://img.shields.io/badge/OpenAPI-%236BA539.svg?style=for-the-badge&logo=openapiinitiative&logoColor=white
-[OpenAPI-url]: https://www.openapis.org/
-[JUnit5-logo]: https://img.shields.io/badge/JUnit5-%2325A162.svg?style=for-the-badge&logo=junit5&logoColor=white
-[JUnit5-url]: https://junit.org/junit5/
-[Mockito-logo]: https://img.shields.io/badge/Mockito-%23C5E063.svg?style=for-the-badge
-[Mockito-url]: https://site.mockito.org/
-[Docker-logo]: https://img.shields.io/badge/docker-%232496ED.svg?style=for-the-badge&logo=docker&logoColor=white
-[Docker-url]: https://www.docker.com/
-[Docker-Compose-logo]: https://img.shields.io/badge/Docker_Compose-%232496ED.svg?style=for-the-badge&logo=docker&logoColor=white
-[Docker-Compose-url]: https://docs.docker.com/compose/
-[Maven-logo]: https://img.shields.io/badge/Apache_Maven-%23C71A36.svg?style=for-the-badge&logo=apachemaven&logoColor=white
-[Maven-url]: https://maven.apache.org/
-[Git-logo]: https://img.shields.io/badge/git-%23F05033.svg?style=for-the-badge&logo=git&logoColor=white
-[Git-url]: https://git-scm.com
 
 ## 💡 Decisões Técnicas
 
-1. **Java 21 LTS + Records:** Utilização de `record` para todos os DTOs de entrada e saída, garantindo imutabilidade, código conciso e ausência de boilerplate (*getters*, *equals*, *hashCode*, *toString*).
-2. **Precisão Financeira (`BigDecimal`):** Uso rigoroso de `BigDecimal` com arredondamento `RoundingMode.HALF_UP` e 2 casas decimais em todos os cálculos salariais e divisões por salário mínimo, prevenindo perdas de precisão de ponto flutuante.
-3. **Padrão RFC 7807 (`ProblemDetail`):** Implementação de tratamento global de exceções via `@RestControllerAdvice` retornando respostas de erro detalhadas e padronizadas para validações e recursos não encontrados.
-4. **Build Otimizado Multi-Stage no Docker:** Separação do estágio de compilação com Maven da imagem final de execução (baseada na JRE Alpine ultra leve), reduzindo drasticamente o tamanho final da imagem e aumentando a segurança.
-5. **Spring Data JPA com MappedSuperclass:** Herança entre a entidade `Funcionario` e a superclasse abstrata `Pessoa` utilizando `@MappedSuperclass`, mantendo o modelo orientado a objetos alinhado à persistência relacional limpa.
+1. **Java 21 LTS e Records:** Adoção de Java Records para a criação de todos os DTOs de entrada e saída. Essa escolha assegura integridade por imutabilidade, elimina a necessidade de bibliotecas invasivas como Lombok e remove código redundante (*getters, equals, hashCode, toString*).
+2. **Precisão Financeira Estrita (`BigDecimal`):** Salários, percentuais de reajuste e divisões por salário mínimo são tratados rigorosamente com `BigDecimal` e modo de arredondamento `RoundingMode.HALF_UP` em 2 casas decimais, eliminando imprecisões e erros de truncamento típicos de ponto flutuante (`float`/`double`).
+3. **Padrão RFC 7807 (`ProblemDetail`):** Os erros da aplicação (como `ResourceNotFoundException` e violações de validação em `@Valid`) são capturados pelo `@RestControllerAdvice` e formatados na especificação RFC 7807, garantindo respostas de erro uniformes, previsíveis e de fácil consumo por clientes de API.
+4. **Herança com `@MappedSuperclass`:** A entidade `Funcionario` herda os atributos essenciais (`id`, `nome`, `dataNascimento`) da superclasse abstrata `Pessoa` utilizando a anotação JPA `@MappedSuperclass`. Isso unifica o modelo orientado a objetos e gera uma tabela relacional coesa (`tb_funcionarios`).
+5. **Docker Multi-Stage Build:** O `Dockerfile` é estruturado em dois estágios: o primeiro compila e empacota o JAR via `maven:3.9.6-eclipse-temurin-21`, enquanto o segundo apenas roda a aplicação sobre `eclipse-temurin:21-jre-alpine`. Isso minimiza drasticamente a superfície de ataque e o tamanho da imagem gerada.
+6. **Redirecionamento Automático:** Implementação do `HomeController` direcionando a rota raiz (`/`) diretamente para a UI do Swagger (`/swagger-ui/index.html`), aprimorando a usabilidade em deploys em nuvem (Render, AWS, etc.).
 
 ## 🚀 Como Executar o Projeto
 
 ### Pré-requisitos
-- Ter o **Docker & Docker Compose** instalado OU **Java JDK 21** e **Maven**.
+- Ter o **Docker & Docker Compose** instalado, **OU**
+- Ter o **Java JDK 21** e **Apache Maven 3.8+** configurados no PATH.
 
 ### Opção 1: Via Docker Compose (Recomendado)
+
+A forma mais rápida e isolada de executar a aplicação:
+
 ```bash
 # 1. Clone o repositório
 git clone https://github.com/ludson96/teste-pratico-projedata.git
 
-# 2. Acesse a pasta do projeto
+# 2. Acesse a pasta raiz
 cd teste-pratico-projedata
 
-# 3. Suba o container com build automático
+# 3. Construa a imagem e inicie o container
 docker compose up --build
 ```
-> Para rodar em segundo plano (modo detached), use `docker compose up -d`.
+> Para liberar o terminal e executar em background: `docker compose up -d`  
+> Para encerrar a execução: `docker compose down`
 
+### Opção 2: Via Maven CLI
 
-### Opção 2: Via IDE (IntelliJ IDEA / VS Code / Eclipse)
-1. Importe o diretório como um projeto **Maven**.
-2. Configure o SDK/JDK do projeto para **Java 21**.
-3. Execute o método `main` na classe `com.projedata.ProjedataApplication`.
-
-
-### Opção 3: Via Maven CLI
 ```bash
-# Executar a aplicação
-mvn spring-boot:run
+# 1. Clone e entre na pasta
+git clone https://github.com/ludson96/teste-pratico-projedata.git
+cd teste-pratico-projedata
 
-# Executar a suíte de testes unitários
+# 2. Execute a suíte completa de testes unitários
 mvn clean test
+
+# 3. Inicie o servidor da aplicação
+mvn spring-boot:run
 ```
 
-## 🔍 Links Úteis com o App em Execução
+### Opção 3: Execução em IDE
 
-- 📄 **Swagger UI (Documentação Interativa):** [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
-- 📊 **OpenAPI JSON Spec:** [http://localhost:8080/v3/api-docs](http://localhost:8080/v3/api-docs)
-- 🗄️ **Console Web H2:** [http://localhost:8080/h2-console](http://localhost:8080/h2-console)
-  - **JDBC URL:** `jdbc:h2:mem:projedatadb`
-  - **User:** `sa`
-  - **Password:** *(deixar em branco)*
+1. Abra sua IDE preferida (**IntelliJ IDEA**, **VS Code** ou **Eclipse**).
+2. Abra a pasta raiz do projeto como um projeto **Maven**.
+3. Certifique-se de configurar o **JDK 21** no `Project SDK`.
+4. Execute a classe principal `com.projedata.ProjedataApplication`.
 
+## 🔍 Acessos e Links Úteis em Execução
+
+Com a aplicação rodando localmente na porta `8080`:
+
+| Recurso | URL | Observação |
+| :--- | :--- | :--- |
+| 📄 **Swagger UI** | [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html) | Documentação viva interativa |
+| 📊 **OpenAPI JSON Spec** | [http://localhost:8080/v3/api-docs](http://localhost:8080/v3/api-docs) | Esquema técnico da OpenAPI |
+| 🗄️ **Console Web H2** | [http://localhost:8080/h2-console](http://localhost:8080/h2-console) | Banco de dados em tempo de execução |
+
+> **Credenciais do H2 Console:**  
+> - **JDBC URL:** `jdbc:h2:mem:projedatadb`  
+> - **User:** `sa`  
+> - **Password:** *(deixar em branco)*
 
 ## 📄 Licença
 
-Este projeto está sob a licença [MIT](LICENSE).
+Este projeto é distribuído sob os termos da licença [MIT](LICENSE). Consulte o arquivo de licença para mais detalhes.
