@@ -4,7 +4,6 @@
 [![Spring Boot 3](https://img.shields.io/badge/Spring_Boot-3.4.3-6DB33F.svg?style=for-the-badge&logo=spring-boot)](https://spring.io/projects/spring-boot)
 [![Docker](https://img.shields.io/badge/Docker-Enabled-2496ED.svg?style=for-the-badge&logo=docker)](https://www.docker.com/)
 [![Swagger](https://img.shields.io/badge/Swagger-OpenAPI_3-85EA2D.svg?style=for-the-badge&logo=swagger)](https://swagger.io/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
 > 🇧🇷 **Português** | 🇺🇸 [**English Version**](README.en.md)
 
@@ -27,7 +26,6 @@ API RESTful corporativa de alta performance para administração de funcionário
   - [Opção 2: Via Maven CLI](#opção-2-via-maven-cli)
   - [Opção 3: Execução em IDE](#opção-3-execução-em-ide)
 - [🔍 Acessos e Links Úteis em Execução](#-acessos-e-links-úteis-em-execução)
-- [📄 Licença](#-licença)
 
 ## 📝 Sobre o Projeto
 
@@ -225,6 +223,3 @@ Com a aplicação rodando localmente na porta `8080`:
 > - **User:** `sa`  
 > - **Password:** *(deixar em branco)*
 
-## 📄 Licença
-
-Este projeto é distribuído sob os termos da licença [MIT](LICENSE). Consulte o arquivo de licença para mais detalhes.
